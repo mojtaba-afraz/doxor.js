@@ -27,4 +27,10 @@ export default class Doxor {
             }
         })
     }
+
+    Insert(name, value) {
+        this.#DatabaseBridge(DB => {
+            const request = this.#GetObjectStore(DB, name).add(value);
+        }, 'insert')
+    }
 }
