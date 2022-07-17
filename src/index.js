@@ -18,4 +18,13 @@ export default class Doxor {
     #GetObjectStore(DB, name, access = "readwrite") {
         return DB.transaction(name, access).objectStore(name)
     }
+
+    Store(object) {
+        this.#DatabaseBridge(DB => {
+            const objectStore = DB.createObjectStore(object.name, {keyPath: "id", autoIncrement: true});
+            for (let counter = 0; counter < object.indexes.length; counter++) {
+                objectStore.createIndex(object.indexes[counter].key, object.indexes[counter].key, {unique: object.indexes[counter].unique});
+            }
+        })
+    }
 }
