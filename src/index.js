@@ -33,4 +33,23 @@ export default class Doxor {
             const request = this.#GetObjectStore(DB, name).add(value);
         }, 'insert')
     }
+
+    remove(name, id) {
+        this.#DatabaseBridge(DB => {
+            const request = this.#GetObjectStore(DB, name).delete(id)
+        }, "remove")
+    }
+
+    async get(name, id, callback) {
+        this.#DatabaseBridge(DB => {
+            this.#GetObjectStore(DB,name,undefined).get(id).onsuccess = event => callback(event.target.result)
+        }, 'get')
+
+    }
+
+    getAll(name,callback){
+        this.#DatabaseBridge(DB =>{
+            const request = this.#GetObjectStore(DB,name).getAll().onsuccess = event => callback(event.target.result)
+        },'getAll')
+    }
 }
