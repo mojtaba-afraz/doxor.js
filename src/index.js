@@ -42,14 +42,14 @@ export default class Doxor {
 
     async get(name, id, callback) {
         this.#DatabaseBridge(DB => {
-            this.#GetObjectStore(DB,name,undefined).get(id).onsuccess = event => callback(event.target.result)
+            this.#GetObjectStore(DB, name, undefined).get(id).onsuccess = event => callback(event.target.result)
         }, 'get')
 
     }
 
-    getAll(name,callback){
-        this.#DatabaseBridge(DB =>{
-            const request = this.#GetObjectStore(DB,name).getAll().onsuccess = event => callback(event.target.result)
-        },'getAll')
+    getAll(name, callback) {
+        this.#DatabaseBridge(DB => {
+            const request = this.#GetObjectStore(DB, name).getAll().onsuccess = event => callback(event.target.result)
+        }, 'getAll')
     }
 }
