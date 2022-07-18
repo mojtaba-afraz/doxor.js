@@ -1,6 +1,6 @@
 {
   "name": "doxor.js",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta-1",
   "type": "module",
   "description": "offline Front-End database - lightweight library for interacting with IndexedDB",
   "main": "dist/doxor.js",
