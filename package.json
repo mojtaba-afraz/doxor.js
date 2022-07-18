@@ -1,22 +1,34 @@
 {
   "name": "doxor.js",
-  "version": "0.9.1",
-  "description": "A lightweight library for interacting with IndexedDB",
-  "main": "src/index.js",
+  "version": "0.9.5",
+  "type": "module",
+  "description": "offline Front-End database - lightweight library for interacting with IndexedDB",
+  "main": "dist/doxor.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mojtaba-afraz/doxor.js.git"
   },
   "keywords": [
-    "IndexedDB","JavaScript","javascript","js","frontend","db","Database"
+    "IndexedDB",
+    "JavaScript",
+    "javascript",
+    "js",
+    "frontend",
+    "db",
+    "Database"
   ],
   "author": "Mojtaba Afraz",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mojtaba-afraz/doxor.js/issues"
   },
-  "homepage": "https://github.com/mojtaba-afraz/doxor.js#readme"
+  "homepage": "https://github.com/mojtaba-afraz/doxor.js#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^3.0.0"
+  }
 }
