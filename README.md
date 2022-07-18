@@ -1,7 +1,8 @@
 # doxor.js
 <p align="center">
   <img src="https://i.ibb.co/TgBQ8TR/doxor.png" width="350" alt="logo"/>
-  <br/> A library for interacting with IndexedDB
+  <br/> 
+    <b>Offline database in Front-End <br/> library for interacting with IndexedDB<b/>
 
 </p>
 <hr/>
