@@ -2,10 +2,10 @@ import { AccessMode } from './models/AccessMode';
 import { QueryType } from './models/QueryType';
 
 export default class Doxor {
-    public name: any;
+    public name: string;
     public version: number = 1;
 
-    constructor(name) {
+    constructor(name: string) {
         this.name = name;
         let request = indexedDB.open(name);
         request.onsuccess = (event: any) => {
@@ -51,33 +51,33 @@ export default class Doxor {
         this.#DatabaseBridge(callback);
     }
 
-    createCollection(name): void {
+    createCollection(name: string): void {
         this.#DatabaseBridge((DB: any) => {
             DB.createObjectStore(name, { keyPath: "id", autoIncrement: true });
         })
     }
 
-    insert(name, value): void {
+    insert(name: string, value): void {
         const callback = (DB: any) => {
             const request = Doxor.#GetObjectStore(DB, name).add(value);
         };
         this.#DatabaseBridge(callback, QueryType.insert);
     }
 
-    remove(name, id: string): void {
+    remove(name: string, id: string): void {
         const callback = (DB: any) => {
             const request = Doxor.#GetObjectStore(DB, name).delete(id)
         };
         this.#DatabaseBridge(callback, QueryType.remove)
     }
 
-    async get(name, id, callback): Promise<any> {
+    async get(name: string, id, callback): Promise<any> {
         await this.#DatabaseBridge((DB: any) => {
             Doxor.#GetObjectStore(DB, name, undefined).get(id).onsuccess = event => callback(event.target.result)
         }, QueryType.get);
     }
 
-    getAll(name, callback) {
+    getAll(name: string, callback) {
         this.#DatabaseBridge(DB => {
             const request = Doxor.#GetObjectStore(DB, name).getAll().onsuccess = event => callback(event.target.result)
         }, QueryType.getAll)
