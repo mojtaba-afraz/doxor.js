@@ -1,28 +1,38 @@
+import { QueryType } from './models/QueryType';
+
 export default class Doxor {
+    public name;
+    public version = 1;
+
     constructor(name) {
         this.name = name;
-        this.version = 1;
         let request = indexedDB.open(name)
-        request.onsuccess = (event) => {
+        request.onsuccess = (event: any) => {
             this.name = event.target.result.name;
             this.version = event.target.result.version;
         }
+
         request.onerror = (error) => {
             console.error(error);
         }
     }
-    
-    #DatabaseBridge(callback, type = 'store') {
-        (type === 'store') ? this.version += 1 : undefined;
-        let request = indexedDB.open(this.name, this.version);
-        request.onupgradeneeded = () => {
-            if (type === 'store') callback(request.result)
+
+    #DatabaseBridge(callback, type = QueryType.store) {
+        if (type === QueryType.store) {
+            this.version += 1;
         }
+
+        let request = indexedDB.open(this.name, this.version);
+
+        request.onupgradeneeded = () => {
+            if (type === QueryType.store) callback(request.result);
+        }
+
         request.onsuccess = () => {
-            if (type !== 'store') {
-                callback(request.result)
+            if (type !== QueryType.store) {
+                callback(request.result);
             }
-            request.result.close()
+            request.result.close();
         }
     }
 
@@ -48,24 +58,24 @@ export default class Doxor {
     insert(name, value) {
         this.#DatabaseBridge(DB => {
             const request = Doxor.#GetObjectStore(DB, name).add(value);
-        }, 'insert')
+        }, QueryType.insert)
     }
 
     remove(name, id) {
         this.#DatabaseBridge(DB => {
             const request = Doxor.#GetObjectStore(DB, name).delete(id)
-        }, "remove")
+        }, QueryType.remove)
     }
 
     async get(name, id, callback) {
         this.#DatabaseBridge(DB => {
             Doxor.#GetObjectStore(DB, name, undefined).get(id).onsuccess = event => callback(event.target.result)
-        }, 'get')
+        }, QueryType.get)
     }
 
     getAll(name, callback) {
         this.#DatabaseBridge(DB => {
             const request = Doxor.#GetObjectStore(DB, name).getAll().onsuccess = event => callback(event.target.result)
-        }, 'getAll')
+        }, QueryType.getAll)
     }
 }
