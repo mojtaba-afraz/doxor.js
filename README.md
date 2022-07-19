@@ -67,15 +67,7 @@ dbName.get('users',1,result => {
 })
 ```
 
-## Get All Record
-
-```javascript
-dbName.getAll('users',result => {
-    console.log(result)
-})
-```
-
-## Get All Record
+## Get All Records
 
 ```javascript
 dbName.getAll('users',result => {
