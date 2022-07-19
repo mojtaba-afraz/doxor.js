@@ -1,18 +1,18 @@
 export default class Doxor {
     constructor(name) {
-        this.name = name
-        this.version = 1
+        this.name = name;
+        this.version = 1;
             let request = indexedDB.open(name)
             request.onsuccess = (event) => {
-                this.name = event.target.result.name
-                this.version = event.target.result.version
+                this.name = event.target.result.name;
+                this.version = event.target.result.version;
             }
             request.onerror = (error) => {
-                console.error(error)
+                console.error(error);
             }
     }
     #DatabaseBridge(callback, type = 'store') {
-        (type === 'store') ? this.version += 1 : undefined
+        (type === 'store') ? this.version += 1 : undefined;
         let request = indexedDB.open(this.name, this.version);
         request.onupgradeneeded = event => {
             if (type === 'store') callback(request.result)
