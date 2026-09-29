@@ -1,0 +1,215 @@
+:root {
+  --green: #98c93c;
+  --green-dark: #455d2c;
+  --bg: #f6f8f3;
+  --card: #ffffff;
+  --text: #1d2418;
+  --muted: #5d6b55;
+  --border: #dde5d3;
+  --danger: #b3261e;
+  color-scheme: light dark;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12160f;
+    --card: #1b2117;
+    --text: #e7eee0;
+    --muted: #9aa890;
+    --border: #2d3727;
+    --danger: #ff8a80;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 8px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+a {
+  color: var(--green-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  a {
+    color: var(--green);
+  }
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.card.wide {
+  grid-column: 1 / -1;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.query label {
+  flex-direction: row;
+  align-items: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.query input[name="value"] {
+  width: 14ch;
+}
+
+.query input[name="limit"] {
+  width: 8ch;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button {
+  cursor: pointer;
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  color: #fff;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--text);
+}
+
+button.danger {
+  background: transparent;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+button.small {
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  margin-inline-end: 4px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+pre {
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--bg);
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  display: block;
+  overflow-x: auto;
+}
+
+th,
+td {
+  text-align: start;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+#log {
+  margin: 0;
+  padding-inline-start: 36px;
+  max-height: 240px;
+  overflow-y: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+#log .error {
+  color: var(--danger);
+}
+
+#log .event {
+  color: var(--green-dark);
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  #log .event {
+    color: var(--green);
+  }
+}

@@ -15,7 +15,11 @@
     "declaration": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": []
+    "types": [],
+    "paths": {
+      "doxor.js": ["./src/index.ts"]
+    }
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "playground/*.ts"],
+  "exclude": ["playground/vite.config.ts"]
 }

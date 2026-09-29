@@ -4,5 +4,6 @@
     "isolatedDeclarations": false,
     "declaration": false
   },
-  "include": ["*.config.ts"]
+  "include": ["*.config.ts", "playground/vite.config.ts"],
+  "exclude": []
 }

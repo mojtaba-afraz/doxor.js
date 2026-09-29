@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>doxor.js playground</title>
+    <meta name="description" content="Try doxor.js, typed collections for IndexedDB, in your browser." />
+    <link rel="icon" href="./logo.png" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <img src="./logo.png" alt="" width="48" height="50" />
+      <div>
+        <h1>doxor.js playground</h1>
+        <p>
+          Typed collections for IndexedDB. Everything runs in this browser tab: open DevTools →
+          Application → IndexedDB → <code>doxor-playground</code> to see the data, and open this page in a
+          second tab to watch the multi-tab events.
+          <a href="https://github.com/mojtaba-afraz/doxor.js#readme">Documentation</a>
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Schema</h2>
+        <pre><code id="schema"></code></pre>
+      </section>
+
+      <section class="card">
+        <h2>Add a user</h2>
+        <form id="add">
+          <label>Name <input name="name" required placeholder="Ali" /></label>
+          <label>Email <input name="email" type="email" required placeholder="ali@example.com" /></label>
+          <label>Age <input name="age" type="number" min="0" required value="30" /></label>
+          <label>Tags <input name="tags" placeholder="admin, dev" /></label>
+          <button type="submit">insert()</button>
+        </form>
+        <div class="actions">
+          <button type="button" id="seed">Add sample users</button>
+          <button type="button" id="clear" class="secondary">clear()</button>
+          <button type="button" id="drop" class="danger">Delete database</button>
+        </div>
+      </section>
+
+      <section class="card wide">
+        <h2>Query</h2>
+        <form id="query" class="query">
+          <label>where(<select name="index"></select>)</label>
+          <label>
+            <select name="op">
+              <option value="">(all)</option>
+              <option value="equals">equals</option>
+              <option value="gt">gt</option>
+              <option value="gte" selected>gte</option>
+              <option value="lt">lt</option>
+              <option value="lte">lte</option>
+              <option value="startsWith">startsWith</option>
+            </select>
+            <input name="value" value="18" size="12" />
+          </label>
+          <label><input type="checkbox" name="reverse" /> reverse()</label>
+          <label>limit(<input name="limit" type="number" min="0" size="4" />)</label>
+          <button type="submit">Run</button>
+        </form>
+        <pre><code id="code"></code></pre>
+        <table>
+          <thead>
+            <tr><th>id</th><th>name</th><th>email</th><th>age</th><th>tags</th><th></th></tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p id="summary" class="muted"></p>
+      </section>
+
+      <section class="card wide">
+        <h2>Events and errors</h2>
+        <ol id="log" reversed></ol>
+      </section>
+    </main>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
