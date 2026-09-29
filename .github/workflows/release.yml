@@ -55,7 +55,7 @@ jobs:
       - run: npm run build
       - run: npm run check:pkg
       - run: npm run size
-      - run: npm pack --pack-destination out
+      - run: mkdir -p out && npm pack --pack-destination out
       - uses: actions/upload-artifact@v7
         with:
           name: npm-tarball
