@@ -1,0 +1,105 @@
+name: Release
+
+# Pushing a vX.Y.Z tag (see .github/RELEASING.md) builds, checks and packs the package, stages it on
+# npm through trusted publishing (OIDC, no tokens), and drafts a GitHub Release. A maintainer then
+# approves the staged version on npm with 2FA and publishes the draft release.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions: {}
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Verify and pack
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      dist-tag: ${{ steps.meta.outputs.dist-tag }}
+      prerelease: ${{ steps.meta.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - id: meta
+        name: Check the tag matches package.json
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          if [ "v$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $VERSION"
+            exit 1
+          fi
+          if [[ "$VERSION" == *-* ]]; then
+            echo "dist-tag=next" >> "$GITHUB_OUTPUT"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "dist-tag=latest" >> "$GITHUB_OUTPUT"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+      - run: npm ci
+      - run: npx biome ci .
+      - run: npm run typecheck
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npx vitest run --project "browser (chromium)"
+      - run: npm run build
+      - run: npm run check:pkg
+      - run: npm run size
+      - run: npm pack --pack-destination out
+      - uses: actions/upload-artifact@v7
+        with:
+          name: npm-tarball
+          path: out/*.tgz
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Stage on npm
+    needs: build
+    runs-on: ubuntu-latest
+    # Must match the environment in the npm trusted publisher settings.
+    environment: npm
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - uses: actions/download-artifact@v8
+        with:
+          name: npm-tarball
+          path: out
+      # The tarball built above is published as is; no repository code runs in this job.
+      - name: Stage the tarball (approve it on npmjs.com with 2FA)
+        env:
+          DIST_TAG: ${{ needs.build.outputs.dist-tag }}
+        run: npm stage publish out/*.tgz --tag "$DIST_TAG" --provenance --access public
+
+  github-release:
+    name: Draft GitHub Release
+    needs: [build, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Stays a draft until the staged version is approved on npm (see RELEASING.md).
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PRERELEASE: ${{ needs.build.outputs.prerelease }}
+        run: |
+          FLAGS=(--draft --verify-tag --generate-notes --title "$GITHUB_REF_NAME")
+          if [ "$PRERELEASE" = "true" ]; then FLAGS+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" "${FLAGS[@]}"

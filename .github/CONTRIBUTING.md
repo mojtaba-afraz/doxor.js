@@ -67,8 +67,7 @@ test/
 ## Releases
 
 Releases are published by the maintainers from GitHub Actions, using npm trusted publishing with provenance.
-Contributors never need npm access. The release steps are documented in [RELEASING.md](RELEASING.md) once the
-release workflow is in place.
+Contributors never need npm access. The release steps are documented in [RELEASING.md](RELEASING.md).
 
 ## License
 
