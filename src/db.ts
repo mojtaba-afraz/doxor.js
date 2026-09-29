@@ -103,6 +103,10 @@ export function createDB<const C extends Collections = Record<never, AnyCollecti
   }
   const schema = buildSchema(options.collections, options.migrations)
   const connection = new Connection(options, schemaOpen(schema))
+  const env = {
+    keyRange: () => connection.keyRange,
+    cmp: (a: unknown, b: unknown) => connection.factory.cmp(a, b),
+  }
 
   const api: DatabaseApi<Collections> = {
     name: options.name,
@@ -126,6 +130,7 @@ export function createDB<const C extends Collections = Record<never, AnyCollecti
             name,
             schema.collections[name] ?? OUT_OF_LINE,
             transactionExecutor(transaction, name),
+            env,
           ),
         ]),
       )
@@ -151,7 +156,7 @@ export function createDB<const C extends Collections = Record<never, AnyCollecti
   const tables = Object.fromEntries(
     Object.entries(schema.collections).map(([name, collectionSchema]) => [
       name,
-      createTable(name, collectionSchema, standaloneExecutor(connection, name)),
+      createTable(name, collectionSchema, standaloneExecutor(connection, name), env),
     ]),
   )
   return { ...tables, ...api } as unknown as Database<C>

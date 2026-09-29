@@ -11,5 +11,6 @@ export type {
 export { createDB } from './db.js'
 export type { DoxorErrorCode } from './errors.js'
 export { DoxorError } from './errors.js'
+export type { IndexValue, Query } from './query.js'
 export type { Migration, MigrationCollection, MigrationContext } from './schema.js'
 export type { Changes, ExplicitKey, InsertValue, KeyValue, Table, TableOf } from './table.js'
