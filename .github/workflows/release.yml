@@ -81,11 +81,15 @@ jobs:
         with:
           name: npm-tarball
           path: out
-      # The tarball built above is published as is; no repository code runs in this job.
-      - name: Stage the tarball (approve it on npmjs.com with 2FA)
+      # The tarball built above is extracted and published as a folder: npm only copies the README
+      # text into the registry metadata (shown on npmjs.com) when it publishes a directory.
+      # --ignore-scripts: no repository code runs in this job.
+      - name: Stage the package (approve it on npmjs.com with 2FA)
         env:
           DIST_TAG: ${{ needs.build.outputs.dist-tag }}
-        run: npm stage publish ./out/*.tgz --tag "$DIST_TAG" --provenance --access public --loglevel verbose
+        run: |
+          tar -xzf out/*.tgz -C out
+          npm stage publish ./out/package --ignore-scripts --tag "$DIST_TAG" --provenance --access public --loglevel verbose
 
   github-release:
     name: Draft GitHub Release
