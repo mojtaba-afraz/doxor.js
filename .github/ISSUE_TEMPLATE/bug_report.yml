@@ -1,0 +1,56 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! A minimal reproduction is the fastest way to a fix. Fork the
+        [StackBlitz example](https://stackblitz.com/github/mojtaba-afraz/doxor.js/tree/main/examples/vanilla)
+        and paste the link below.
+  - type: input
+    id: version
+    attributes:
+      label: doxor.js version
+      placeholder: 2.0.0
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 140, Safari 26, Firefox 143…
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      multiple: true
+      options:
+        - Bundler (Vite, webpack, …)
+        - CDN / no bundler
+        - Web Worker
+        - SSR framework (Next.js, Nuxt, SvelteKit, …)
+        - Tests (fake-indexeddb)
+        - Other
+  - type: input
+    id: reproduction
+    attributes:
+      label: Reproduction link
+      description: StackBlitz, CodeSandbox or a small repository.
+  - type: textarea
+    id: steps
+    attributes:
+      label: What happened?
+      description: The code you ran, what you expected, and what happened instead (including the error `code`).
+      render: ts
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched the existing issues.
+          required: true
