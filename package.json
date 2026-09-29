@@ -31,7 +31,7 @@
     {
       "name": "ESM",
       "path": "dist/index.js",
-      "limit": "5 kB"
+      "limit": "4.9 kB"
     }
   ],
   "repository": {
