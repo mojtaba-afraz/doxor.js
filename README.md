@@ -16,10 +16,9 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/mojtaba-afraz/doxor.js" alt="MIT license"></a>
 </p>
 
-> [!IMPORTANT]
-> **doxor.js 2.0 is a complete rewrite and is in prerelease.** Install it with `npm i doxor.js@next`.
-> Until 2.0.0 is released, a plain `npm i doxor.js` still installs the legacy `1.0.0-beta-1` callback API.
-> See [Migrating from 1.x](#migrating-from-1x).
+> [!NOTE]
+> doxor.js 2.0 is a complete rewrite of the 2022 callback API. Coming from 1.x? See
+> [Migrating from 1.x](#migrating-from-1x).
 
 ```ts
 import { collection, createDB } from 'doxor.js'
@@ -68,14 +67,14 @@ const adults = await db.users.where('age').gte(18).limit(20).toArray()          
 ## Install
 
 ```sh
-npm i doxor.js@next    # pnpm add doxor.js@next · yarn add doxor.js@next · bun add doxor.js@next
+npm i doxor.js    # pnpm add doxor.js · yarn add doxor.js · bun add doxor.js
 ```
 
 From a CDN, without a bundler:
 
 ```html
 <script type="module">
-  import { collection, createDB } from 'https://cdn.jsdelivr.net/npm/doxor.js@next/+esm'
+  import { collection, createDB } from 'https://cdn.jsdelivr.net/npm/doxor.js@2/+esm'
 </script>
 ```
 
