@@ -1,2 +1,5 @@
+export type { DatabaseEventName, DatabaseEvents, DatabaseListener } from './connection.js'
+export type { CreateDBOptions, Database } from './db.js'
+export { createDB } from './db.js'
 export type { DoxorErrorCode } from './errors.js'
 export { DoxorError } from './errors.js'
