@@ -12,6 +12,7 @@ export type DoxorErrorCode =
   | 'Migration'
   | 'Outdated'
   | 'TransactionInactive'
+  | 'ReadOnly'
   | 'Aborted'
   | 'Unknown'
 
@@ -23,6 +24,7 @@ const DOM_EXCEPTION_CODES: Readonly<Record<string, DoxorErrorCode>> = {
   DataCloneError: 'DataClone',
   DataError: 'Data',
   TransactionInactiveError: 'TransactionInactive',
+  ReadOnlyError: 'ReadOnly',
   AbortError: 'Aborted',
 }
 
