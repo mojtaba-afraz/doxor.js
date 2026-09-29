@@ -1,25 +1,51 @@
 {
   "name": "doxor.js",
   "version": "1.0.0-beta-1",
+  "description": "Tiny, typed, Promise-based collections for IndexedDB",
   "type": "module",
-  "description": "offline Front-End database - lightweight library for interacting with IndexedDB",
-  "main": "dist/doxor.js",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "test": "vitest run --project unit --coverage",
+    "test:browser": "vitest run --project \"browser*\"",
+    "check:pkg": "publint --strict && attw --pack . --profile esm-only",
+    "size": "size-limit",
+    "prepublishOnly": "npm run build && npm run check:pkg"
+  },
+  "size-limit": [
+    {
+      "name": "ESM",
+      "path": "dist/index.js",
+      "limit": "3 kB"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mojtaba-afraz/doxor.js.git"
   },
   "keywords": [
-    "IndexedDB",
-    "JavaScript",
-    "javascript",
-    "js",
-    "frontend",
-    "db",
-    "Database"
+    "indexeddb",
+    "idb",
+    "browser",
+    "database",
+    "storage",
+    "offline",
+    "typescript"
   ],
   "author": "Mojtaba Afraz",
   "license": "MIT",
@@ -27,8 +53,29 @@
     "url": "https://github.com/mojtaba-afraz/doxor.js/issues"
   },
   "homepage": "https://github.com/mojtaba-afraz/doxor.js#readme",
-  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^22.19.0 || ^24.11.0 || >=26.0.0",
+      "onFail": "warn"
+    }
+  },
   "devDependencies": {
-    "vite": "^3.0.0"
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@biomejs/biome": "2.5.14",
+    "@size-limit/preset-small-lib": "^14.1.0",
+    "@vitest/browser-playwright": "^5.0.2",
+    "@vitest/coverage-v8": "^5.0.2",
+    "fake-indexeddb": "^6.2.5",
+    "playwright": "^1.63.0",
+    "publint": "^0.3.24",
+    "size-limit": "^14.1.0",
+    "tsdown": "^0.23.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
   }
 }
