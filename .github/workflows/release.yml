@@ -85,7 +85,7 @@ jobs:
       - name: Stage the tarball (approve it on npmjs.com with 2FA)
         env:
           DIST_TAG: ${{ needs.build.outputs.dist-tag }}
-        run: npm stage publish out/*.tgz --tag "$DIST_TAG" --provenance --access public
+        run: npm stage publish ./out/*.tgz --tag "$DIST_TAG" --provenance --access public
 
   github-release:
     name: Draft GitHub Release
