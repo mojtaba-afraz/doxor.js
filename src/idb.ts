@@ -8,13 +8,13 @@ export function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
   })
 }
 
-/** Resolves when the transaction commits; rejects if it errors or aborts. */
+/**
+ * Resolves when the transaction commits; rejects with the transaction's error when it aborts.
+ * (A failed request aborts its transaction, so its error surfaces here too.)
+ */
 export function transactionDone(transaction: IDBTransaction): Promise<void> {
   return new Promise((resolve, reject) => {
     transaction.addEventListener('complete', () => resolve(), { once: true })
-    transaction.addEventListener('error', () => reject(toDoxorError(transaction.error)), {
-      once: true,
-    })
     transaction.addEventListener(
       'abort',
       () =>

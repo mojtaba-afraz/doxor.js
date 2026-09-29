@@ -37,10 +37,15 @@ export class Collection<
    * Uses a record property as the primary key.
    * With `autoIncrement: true` the key is generated and becomes optional on insert.
    */
-  key<P extends StringKeys<T>, A extends boolean = false>(
+  key<P extends StringKeys<T>>(
     path: P,
-    options?: { autoIncrement?: A },
-  ): Collection<T, P, Index, A> {
+    options: { autoIncrement: true },
+  ): Collection<T, P, Index, true>
+  key<P extends StringKeys<T>>(
+    path: P,
+    options?: { autoIncrement?: false },
+  ): Collection<T, P, Index, false>
+  key(path: string, options?: { autoIncrement?: boolean }): Collection<T, string, Index, boolean> {
     return new Collection({
       ...this.schema,
       keyPath: path,
