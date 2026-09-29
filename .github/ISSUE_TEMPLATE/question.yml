@@ -1,0 +1,14 @@
+name: Question
+description: Ask how to do something with doxor.js.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: Please check the [README](https://github.com/mojtaba-afraz/doxor.js#readme) first.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What you are trying to do, and the code you have so far.
+    validations:
+      required: true
