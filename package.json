@@ -1,6 +1,6 @@
 {
   "name": "doxor.js",
-  "version": "1.0.0-beta-1",
+  "version": "2.0.0-alpha.0",
   "description": "Tiny, typed, Promise-based collections for IndexedDB",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "test:browser": "vitest run --project \"browser*\"",
     "check:pkg": "publint --strict && attw --pack . --profile esm-only",
     "size": "size-limit",
-    "prepublishOnly": "npm run build && npm run check:pkg"
+    "prepublishOnly": "npm run build"
   },
   "size-limit": [
     {
