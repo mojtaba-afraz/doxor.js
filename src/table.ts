@@ -2,6 +2,7 @@ import type { Collection, CollectionSchema } from './collection.js'
 import type { Connection } from './connection.js'
 import { DoxorError, toDoxorError } from './errors.js'
 import { requestToPromise, transactionDone } from './idb.js'
+import { createQuery, type IndexValue, type Query, type QueryEnv } from './query.js'
 
 /** The primary key type of a collection: the key property's type, or any valid key for out-of-line keys. */
 export type KeyValue<T, K extends string> = [K] extends [never]
@@ -57,6 +58,15 @@ export interface Table<
   count(): Promise<number>
   /** Resolves with every record, ordered by key. */
   toArray(): Promise<T[]>
+  /**
+   * Starts a query on a declared index or on the key property.
+   *
+   * @example
+   * ```ts
+   * await db.users.where('age').gte(18).limit(20).toArray()
+   * ```
+   */
+  where<P extends I | K>(index: P): Query<T, KeyValue<T, K>, IndexValue<T, P>>
 }
 
 /** The Table type for a collection declaration. */
@@ -152,6 +162,7 @@ export function createTable(
   name: string,
   schema: CollectionSchema,
   exec: Executor,
+  env: QueryEnv,
 ): Table<Value, never, string, boolean> {
   const add = (store: IDBObjectStore, value: unknown, key?: Key) =>
     requestToPromise(key === undefined ? store.add(value) : store.add(value, key))
@@ -188,5 +199,13 @@ export function createTable(
       }),
     count: () => exec('readonly', (store) => requestToPromise(store.count())),
     toArray: () => exec('readonly', (store) => requestToPromise(store.getAll())),
+    where: (index) =>
+      createQuery(
+        index,
+        schema.keyPath,
+        schema.indexes[index]?.multiEntry ?? false,
+        exec,
+        env,
+      ) as Query<Value, IDBValidKey, never>,
   }
 }
