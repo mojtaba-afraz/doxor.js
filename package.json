@@ -18,6 +18,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsdown",
+    "playground": "vite playground",
+    "build:playground": "vite build playground",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
     "lint": "biome check",
     "lint:fix": "biome check --write",
