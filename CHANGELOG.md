@@ -6,6 +6,14 @@ All notable changes to doxor.js are documented here. The format is based on
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-09-29
+
+The first stable release of doxor.js 2.0, a complete rewrite with typed collections, automatic schema upgrades,
+migrations, queries and transactions. `npm i doxor.js` now installs 2.x.
+
+There are no code changes since `2.0.0-rc.0`. The full list of changes since 1.x is under
+[2.0.0-alpha.0](#200-alpha0---2026-09-29).
+
 ## [2.0.0-rc.0] - 2026-09-29
 
 Release candidate for 2.0.0. No changes since `2.0.0-beta.0`; verified on Chromium, Firefox and WebKit.
@@ -16,7 +24,7 @@ The API is now frozen for 2.0: only bug fixes until 2.0.0. No changes since `2.0
 
 ## [2.0.0-alpha.0] - 2026-09-29
 
-First prerelease of doxor.js 2.0, a complete rewrite. Install it with `npm i doxor.js@next`. See [Migrating from 1.x](README.md#migrating-from-1x).
+First prerelease of doxor.js 2.0, a complete rewrite. See [Migrating from 1.x](README.md#migrating-from-1x).
 
 ### Added
 
@@ -65,7 +73,8 @@ First prerelease of doxor.js 2.0, a complete rewrite. Install it with `npm i dox
 
 Early experimental releases. `0.9.0` contains no code; do not use these versions.
 
-[Unreleased]: https://github.com/mojtaba-afraz/doxor.js/compare/v2.0.0-rc.0...HEAD
+[Unreleased]: https://github.com/mojtaba-afraz/doxor.js/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/mojtaba-afraz/doxor.js/compare/v2.0.0-rc.0...v2.0.0
 [2.0.0-rc.0]: https://github.com/mojtaba-afraz/doxor.js/compare/v2.0.0-beta.0...v2.0.0-rc.0
 [2.0.0-beta.0]: https://github.com/mojtaba-afraz/doxor.js/compare/v2.0.0-alpha.0...v2.0.0-beta.0
 [2.0.0-alpha.0]: https://github.com/mojtaba-afraz/doxor.js/compare/v1.0.0-beta-1...v2.0.0-alpha.0

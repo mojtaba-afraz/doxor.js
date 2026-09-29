@@ -7,7 +7,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "doxor.js": "next"
+    "doxor.js": "^2.0.0"
   },
   "devDependencies": {
     "vite": "^8.3.1"
