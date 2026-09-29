@@ -9,6 +9,8 @@ export interface DatabaseEvents {
   blocked: { oldVersion: number; newVersion: number | null }
   /** The browser closed the connection abnormally (e.g. site data was cleared). The next operation reopens it. */
   close: undefined
+  /** The database was upgraded by newer code (usually in another tab). Reads still work; writes reject with `Outdated` until the page reloads. */
+  outdated: { databaseLevel: number; codeLevel: number }
 }
 
 export type DatabaseEventName = keyof DatabaseEvents
@@ -20,16 +22,22 @@ export interface ConnectionOptions {
   IDBKeyRange?: typeof IDBKeyRange
 }
 
-/** Opens the database. Later phases replace this with a schema-aware strategy. */
+/** Callbacks an open strategy uses to report what happened while opening. */
+export interface OpenHooks {
+  blocked(event: IDBVersionChangeEvent): void
+  outdated(info: DatabaseEvents['outdated']): void
+}
+
+/** Opens the database. The schema layer supplies a schema-aware strategy. */
 export type OpenStrategy = (
   factory: IDBFactory,
   name: string,
-  onBlocked: (event: IDBVersionChangeEvent) => void,
+  hooks: OpenHooks,
 ) => Promise<IDBDatabase>
 
-const openLatest: OpenStrategy = (factory, name, onBlocked) => {
+const openLatest: OpenStrategy = (factory, name, hooks) => {
   const request = factory.open(name)
-  request.addEventListener('blocked', onBlocked)
+  request.addEventListener('blocked', (event) => hooks.blocked(event))
   return requestToPromise(request)
 }
 
@@ -45,6 +53,7 @@ export class Connection {
   #pending: Promise<IDBDatabase> | null = null
   #db: IDBDatabase | null = null
   #generation = 0
+  #outdated = false
 
   constructor(options: ConnectionOptions, open: OpenStrategy = openLatest) {
     if ((options.indexedDB === undefined) !== (options.IDBKeyRange === undefined)) {
@@ -68,6 +77,11 @@ export class Connection {
       throw new DoxorError('Unavailable', 'IndexedDB is not available in this environment')
     }
     return keyRange
+  }
+
+  /** True when the last open found a database upgraded by newer code. */
+  get outdated(): boolean {
+    return this.#outdated
   }
 
   /** Returns the open connection, opening it on first use. */
@@ -125,9 +139,16 @@ export class Connection {
 
   async #connect(): Promise<IDBDatabase> {
     const generation = this.#generation
+    let outdated = false
     let db: IDBDatabase
     try {
-      db = await this.#open(this.factory, this.name, (event) => this.#emitBlocked(event))
+      db = await this.#open(this.factory, this.name, {
+        blocked: (event) => this.#emitBlocked(event),
+        outdated: (info) => {
+          outdated = true
+          this.#emit('outdated', info)
+        },
+      })
     } catch (error) {
       throw toDoxorError(error)
     }
@@ -145,6 +166,7 @@ export class Connection {
       this.#emit('close', undefined)
     })
     this.#db = db
+    this.#outdated = outdated
     return db
   }
 
