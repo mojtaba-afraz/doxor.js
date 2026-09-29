@@ -17,7 +17,7 @@ describe('toDoxorError', () => {
   })
 
   it('returns DoxorError instances unchanged', () => {
-    const error = new DoxorError('Blocked', 'blocked')
+    const error = new DoxorError('Aborted', 'aborted')
     expect(toDoxorError(error)).toBe(error)
     expect(error.name).toBe('DoxorError')
   })

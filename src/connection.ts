@@ -17,8 +17,14 @@ export type DatabaseEventName = keyof DatabaseEvents
 export type DatabaseListener<E extends DatabaseEventName> = (payload: DatabaseEvents[E]) => void
 
 export interface ConnectionOptions {
+  /** The IndexedDB database name. */
   name: string
+  /**
+   * A custom IndexedDB implementation, e.g. `fake-indexeddb` in tests. Defaults to the global
+   * `indexedDB`. Pass `IDBKeyRange` from the same implementation.
+   */
   indexedDB?: IDBFactory
+  /** The `IDBKeyRange` that belongs to `indexedDB`. Required when `indexedDB` is passed. */
   IDBKeyRange?: typeof IDBKeyRange
 }
 
