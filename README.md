@@ -17,9 +17,9 @@
 </p>
 
 > [!IMPORTANT]
-> **doxor.js 2.0 is a complete rewrite and is not on npm yet.** `npm i doxor.js` currently installs the legacy
-> `1.0.0-beta-1` callback API. Prereleases of 2.0 will be published under the `next` tag
-> (`npm i doxor.js@next`). See [Migrating from 1.x](#migrating-from-1x).
+> **doxor.js 2.0 is a complete rewrite and is in prerelease.** Install it with `npm i doxor.js@next`.
+> Until 2.0.0 is released, a plain `npm i doxor.js` still installs the legacy `1.0.0-beta-1` callback API.
+> See [Migrating from 1.x](#migrating-from-1x).
 
 ```ts
 import { collection, createDB } from 'doxor.js'
