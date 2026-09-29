@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>doxor.js Benchmark</title>
+  </head>
+  <body>
+    <h1>doxor.js vs idb vs Dexie</h1>
+
+    <div id="conditions">
+      <p id="browser"></p>
+      <ul>
+        <li><strong>Dataset:</strong> 10,000 records ({ name: string, age: number })</li>
+        <li><strong>Runs:</strong> 2 warm-up runs + 7 measured runs (reporting median)</li>
+        <li><strong>Schema:</strong> Object store <code>users</code> with auto-increment <code>id</code> key and <code>age</code> index</li>
+        <li><strong>Timer:</strong> <code>performance.now()</code></li>
+      </ul>
+    </div>
+
+    <button type="button" id="run">Run benchmark</button>
+
+    <p id="status"></p>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Library</th>
+          <th>Insert 10k (ms)</th>
+          <th>Age range query (ms)</th>
+          <th>toArray 10k (ms)</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+
+    <script type="module" src="./benchmark.ts"></script>
+  </body>
+</html>
