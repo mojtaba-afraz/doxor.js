@@ -2,8 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "isolatedDeclarations": false,
-    "declaration": false
+    "declaration": false,
+    "resolveJsonModule": true
   },
-  "include": ["*.config.ts", "playground/vite.config.ts"],
+  "include": ["*.config.ts", "playground/vite.config.ts", "docs/.vitepress/**/*.ts"],
   "exclude": []
 }

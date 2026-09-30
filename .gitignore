@@ -6,3 +6,4 @@ coverage/
 .idea/
 .vscode/
 playground/dist/
+docs/.vitepress/cache/
