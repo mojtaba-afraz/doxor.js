@@ -1,0 +1,146 @@
+/* Brand: the logo's leaf green. #98c93c is too light for text on white, so light mode uses a deeper green
+   for text and links and keeps #98c93c for accents; dark mode uses it directly. */
+:root {
+  --doxor-leaf: #98c93c;
+  --doxor-olive: #455d2c;
+
+  --vp-c-brand-1: #3f6b12;
+  --vp-c-brand-2: #4f8219;
+  --vp-c-brand-3: var(--doxor-olive);
+  --vp-c-brand-soft: rgba(152, 201, 60, 0.18);
+
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-hover-bg: #52702f;
+  --vp-button-brand-active-bg: #3a4f25;
+
+  --vp-home-hero-image-background-image: radial-gradient(
+    circle,
+    rgba(152, 201, 60, 0.35) 0%,
+    rgba(152, 201, 60, 0) 65%
+  );
+  --vp-home-hero-image-filter: blur(40px);
+}
+
+.dark {
+  --vp-c-brand-1: #aed66a;
+  --vp-c-brand-2: #98c93c;
+  --vp-c-brand-3: #98c93c;
+  --vp-c-brand-soft: rgba(152, 201, 60, 0.16);
+
+  --vp-button-brand-text: #17200c;
+  --vp-button-brand-hover-text: #17200c;
+  --vp-button-brand-active-text: #17200c;
+  --vp-button-brand-hover-bg: #aed66a;
+  --vp-button-brand-active-bg: #86b52f;
+
+  --vp-home-hero-image-background-image: radial-gradient(
+    circle,
+    rgba(152, 201, 60, 0.22) 0%,
+    rgba(152, 201, 60, 0) 65%
+  );
+}
+
+/* Hero: the name is the headline, set large and tight. */
+.VPHero .name,
+.VPHero .text {
+  letter-spacing: -0.03em;
+}
+
+.VPHero .name .clip {
+  color: var(--vp-c-brand-1);
+}
+
+@media (min-width: 960px) {
+  .VPHero .text {
+    font-size: 52px;
+    line-height: 58px;
+    max-width: 640px;
+  }
+}
+
+.VPHero .tagline {
+  max-width: 560px;
+}
+
+/* Landing content below the hero. */
+.home-section {
+  margin: 0 auto;
+  max-width: 1152px;
+  padding: 56px 0 0;
+}
+
+.home-section h2 {
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+
+.home-section > p {
+  max-width: 640px;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc .home-points {
+  display: grid;
+  gap: 28px 48px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vp-doc .home-points li {
+  margin: 0;
+}
+
+.home-points strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 17px;
+  color: var(--vp-c-text-1);
+}
+
+.home-points span {
+  color: var(--vp-c-text-2);
+}
+
+@media (min-width: 768px) {
+  .vp-doc .home-points {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.home-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 56px;
+  margin: 28px 0 0;
+}
+
+.home-facts div {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-facts dt {
+  order: 2;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+
+.home-facts dd {
+  order: 1;
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+}
+
+/* The inline type annotations (`// ^?`) are the point of the landing sample, so give them the brand colour. */
+.home-section .twoslash-popup-container {
+  border-color: var(--vp-c-brand-soft);
+}

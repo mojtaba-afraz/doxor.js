@@ -27,6 +27,7 @@ jobs:
       - run: npx biome ci .
       - run: npm run typecheck
       - run: npm test
+      - run: npm run docs:build
       - run: npm run build
       - run: npm run check:pkg
       - run: npm run size
