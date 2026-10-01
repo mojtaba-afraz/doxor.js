@@ -71,7 +71,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@biomejs/biome": "2.5.14",
-    "@shikijs/vitepress-twoslash": "~2.5.0",
+    "@shikijs/vitepress-twoslash": "~4.4.3",
     "@size-limit/preset-small-lib": "^14.1.0",
     "@vitest/browser-playwright": "^5.0.2",
     "@vitest/coverage-v8": "^5.0.2",
