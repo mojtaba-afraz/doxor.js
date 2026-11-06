@@ -1,25 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "lib": ["es2022", "dom"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitOverride": true,
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "isolatedDeclarations": true,
-    "erasableSyntaxOnly": true,
-    "declaration": true,
     "noEmit": true,
-    "skipLibCheck": true,
-    "types": [],
-    "paths": {
-      "doxor.js": ["./src/index.ts"]
-    }
+    "isolatedModules": true,
+    "skipLibCheck": true
   },
-  "include": ["src", "test", "playground/*.ts"],
-  "exclude": ["playground/vite.config.ts"]
+  "include": ["src"]
 }
